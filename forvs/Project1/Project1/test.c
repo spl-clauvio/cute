@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
 #include<stdlib.h>
 extern int e;
@@ -7,7 +8,7 @@ int main()
     scanf("%d %d", &a, &b);
     c = a + b;
     printf("hello,world\nƒ„∫√£¨ ¿ΩÁ£°\n");
-    printf("%d\n", c);
+    printf("%d\n%d\n", c,e);
     system("pause");
     return 0;
 }
