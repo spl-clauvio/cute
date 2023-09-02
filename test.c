@@ -25,7 +25,9 @@ int main()
     printf("\n");
     printf("hello,world!你好，世界！\n");
     printf("%d+%d=%d\ne=%d\nlenth of \"%s\" =%d\nlenth of \"%s\" =%d\n",a,b,c,e,arr1,len1,arr2,len2);
-    printf("\t");
+    printf("%c\n",64);
+    printf("%d\n",strlen("\618"));
+    //printf("%c\n",'\177');MAX number of ASCII is 127(10)
     system("pause");
     return 0;
 }
