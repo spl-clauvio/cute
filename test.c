@@ -48,6 +48,7 @@ int main()
     printf("%d\n%d\n",sizeof(num)/4,sizeof(char));//整形的sizeof每个位置占4个
     printf("%d\n",strlen(arr3));
     printf("%d\n",20||0);
+    printf("%d\n",sizeof(char*));
 
     unsigned int unum1=0;
     uint unum2=0;
