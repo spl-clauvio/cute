@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <Windows.h>
 
 int main()
 {
@@ -12,7 +13,7 @@ int main()
         arr2[n] = '#';
     }
 
-    scanf("%s", &arr1);
+    scanf("%s", arr1);
     int i, sz = 0;
     sz = strlen(arr1);
     arr2[sz] = '\0';
@@ -26,6 +27,10 @@ int main()
     {
         arr2[i] = arr1[i];
         arr2[sz - 1 - i] = arr1[sz - 1 - i];
+
+        Sleep(500);    //延迟，包含<windows.h>头文件
+        system("cls"); // system执行系统命令，这里cls清空屏幕；
+
         printf("%s\n", arr2);
     }
     system("pause");
