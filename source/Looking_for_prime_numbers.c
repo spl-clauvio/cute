@@ -141,6 +141,7 @@ void range_menu()
     printf("Left set %d successfully! Please enter the max number.\n", left);
 
     scanf("%d", &right);
+    clear();
     printf("Prime numbers from %d to %d:\n\n", left, right);
 
     for (prime_check = left; prime_check <= right; prime_check++)
@@ -158,7 +159,7 @@ void range_menu()
                 printf("\n");
             }
             hang_num = 0;
-                }
+        }
     }
     printf("\n%d\n", prime_num);
 }

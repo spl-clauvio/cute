@@ -1,16 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <add.h>
 extern int e;
 #define f 15
 typedef unsigned int uint; //给类型关键词添加小名
 
-int add(int x, int y)
-{
-    int z = 0;
-    z = x + y;
-    return z;
-}
 struct stu
 {
     char name[20];
@@ -57,7 +52,7 @@ int main()
     printf("Jack    18     Male\n%d\n", sizeof(arr2) - 1); //字符串的sizeof会计算上\0的位置
     printf("%d\n%d\n", sizeof(num) / 4, sizeof(char));     //整形的sizeof每个位置占4个
     printf("%d\n", strlen(arr3));
-    printf("%d\n", 20 || 0);
+    printf("%d\n", sizeof(char));
     printf("sizeof(char*) is %d\n", sizeof(char *));
     printf("%d\n", -1 % 2);
 
