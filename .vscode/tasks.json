@@ -8,15 +8,19 @@
                 "-fdiagnostics-color=always",
                 "-g",
                 "${file}",
-                "${fileDirname}/const.c",//多文件编译
-                "-I","D:/C/head",
-                "D:/C/headc/**",   
+                //"${workspace}/execute/**",
+                "D:\\C/const/const.c",//多文件编译
+                "-I","D:\\C\\include",
+                "D:\\C\\execute\\**",   
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "-o",
+                "D:\\C\\code_exe\\${fileBasenameNoExtension}.exe",
                 "-fexec-charset=GBK"
             ],
             "options": {
                 "cwd": "${fileDirname}"
+               //"D:\\MINGW\\x86_64-8.1.0-release-win32-seh-rt_v6-rev0\\mingw64\\bin"
             },
             "problemMatcher": [
                 "$gcc"

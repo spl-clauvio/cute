@@ -158,7 +158,7 @@ void range_menu()
                 printf("\n");
             }
             hang_num = 0;
-        }
+                }
     }
     printf("\n%d\n", prime_num);
 }
