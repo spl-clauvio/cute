@@ -1,3 +1,3 @@
-#include<stdlib.h>
-int e=0;
-int g_global=15;
+#include <stdlib.h>
+int e = 0;
+int g_global = 15;

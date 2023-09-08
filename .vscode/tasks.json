@@ -8,7 +8,9 @@
                 "-fdiagnostics-color=always",
                 "-g",
                 "${file}",
-                "${fileDirname}/const.c"//多文件编译
+                "${fileDirname}/const.c",//多文件编译
+                "-I","D:/C/head",
+                "D:/C/headc/**",   
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "-fexec-charset=GBK"

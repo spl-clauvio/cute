@@ -165,7 +165,10 @@ void range_menu()
 
 void guide_menu()
 {
-    ;
+    clear();
+    printf("Developed by spl-clauvio\n");
+    printf("Copyright by spl-clauvio\n");
+    printf("\n\n");
 }
 
 int main()
