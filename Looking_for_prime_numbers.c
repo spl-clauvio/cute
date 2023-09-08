@@ -10,6 +10,7 @@ void clear()
 {
     system("cls");
 }
+
 int is_prime(int num)
 {
     int i = 0;
