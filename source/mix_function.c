@@ -341,7 +341,6 @@ void hanoi_main()
     int hanoi_input = 0;
     do
     {
-
         clear();
         hanoi_main_menu();
         scanf("%d", &hanoi_input);
@@ -486,10 +485,16 @@ void fibonacci_sequence_main()
 void main_menu()
 {
     printf("#####       Welcome!       #####\n");
+    Sleep(300);
     printf("#####    1.Prime number    #####\n");
+    Sleep(300);
     printf("#####   2.Tower of Hanoi   #####\n");
+    Sleep(300);
     printf("##### 3.Fibonacci sequence #####\n");
+    Sleep(300);
     printf("#####        0.Exit        #####\n");
+    Sleep(200);
+    printf("\nMain menu load successfully!\n");
 }
 
 int account()
@@ -533,7 +538,7 @@ int account()
                 printf("One trying chance left.\n");
                 break;
             case 2:
-                printf("You have use up all entering chances,program is about to exit.\n");
+                printf("You have used up all entering chances,program is about to exit.\n");
 
                 pause();
                 return 0;
@@ -545,7 +550,8 @@ int account()
 
 int main()
 {
-    int input = 0, password_flag = 1;
+    int input = 0;
+    int password_flag = 1;
 
     do
     {
@@ -556,6 +562,7 @@ int main()
                 return 0;
             }
         }
+
         main_menu();
         scanf("%d", &input);
         switch (input)
@@ -572,6 +579,7 @@ int main()
         default:
             break;
         }
+
     } while (input);
 
     clear();

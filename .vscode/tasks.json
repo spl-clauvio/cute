@@ -12,6 +12,7 @@
                 "D:\\C/const/const.c",//多文件编译
                 "-I","D:\\C\\include",
                 "D:\\C\\execute\\**",   
+                //"D:\\C\\execute",   
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "-o",
