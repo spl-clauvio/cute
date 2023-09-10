@@ -80,6 +80,13 @@ void Fibonacci_sequence_return_menu()
     scanf("%d", &over);
 }
 
+void number_counter_return_menu()
+{
+    int over = 0;
+    printf("\n#####  1.Number counter main menu  #####\n");
+    scanf("%d", &over);
+}
+
 void prime_setting_menu_hang_set()
 {
     int flag_setting_menu_hang_set, hang_set_copy = 0;
@@ -328,7 +335,7 @@ void hanoi_solution()
     }
 }
 
-void hanoi_guaie_menu()
+void hanoi_guide_menu()
 {
     clear();
     printf("Developed by spl-clauvio\n");
@@ -358,7 +365,7 @@ void hanoi_main()
 
             break;
         case 3:
-            hanoi_guaie_menu();
+            hanoi_guide_menu();
             hanoi_check_over();
             break;
         default:
@@ -482,6 +489,86 @@ void fibonacci_sequence_main()
     } while (fibonacci_input);
 }
 
+void number_counter_main_menu()
+{
+    printf("#####       Welcome!       #####\n");
+    printf("#####       1.Count        #####\n");
+    printf("#####        0.exit        #####\n");
+}
+
+int number_counter_single_counter(int input, int check)
+{
+    int count = 0;
+    int remainder = 0;
+    input = abs(input);
+
+    do
+    {
+        remainder = input % 10;
+        input = input / 10;
+        if (remainder == check)
+        {
+            count++;
+        }
+    } while (input);
+
+    return count;
+}
+void number_counter_count()
+{
+    int l = 0;
+    int r = 0;
+    int i = 0;
+    int single_return = 0;
+    int sum = 0;
+    int number_counter_count_input = 0;
+
+    printf("Please enter the beginning of a continuous arroy.\n");
+    scanf("%d", &l);
+    clear();
+
+    printf("Please enter the end of a continuous arroy.\n");
+    scanf("%d", &r);
+    clear();
+
+    printf("Please enter the number to count\n");
+    scanf("%d", &number_counter_count_input);
+    clear();
+
+    for (i = l; i <= r; i++)
+    {
+        single_return = number_counter_single_counter(i, number_counter_count_input);
+
+        sum += single_return;
+
+        printf("%8d has %d \'%d\'.\n", i, single_return, number_counter_count_input);
+    }
+    printf("%d\n", sum);
+}
+
+void number_counter_main()
+{
+    int number_counter_input = 0;
+
+    do
+    {
+        clear();
+        number_counter_main_menu();
+        scanf("%d", &number_counter_input);
+        clear();
+
+        switch (number_counter_input)
+        {
+        case 1:
+            number_counter_count();
+            number_counter_return_menu();
+            break;
+        default:
+            break;
+        }
+    } while (number_counter_input);
+}
+
 void main_menu()
 {
     printf("#####       Welcome!       #####\n");
@@ -491,6 +578,8 @@ void main_menu()
     printf("#####   2.Tower of Hanoi   #####\n");
     Sleep(300);
     printf("##### 3.Fibonacci sequence #####\n");
+    Sleep(300);
+    printf("#####   4.Number counter   #####\n");
     Sleep(300);
     printf("#####        0.Exit        #####\n");
     Sleep(200);
@@ -553,15 +642,16 @@ int main()
     int input = 0;
     int password_flag = 1;
 
+    if (password_flag)
+    {
+        if (0 == account())
+        {
+            return 0;
+        }
+    }
+
     do
     {
-        if (password_flag)
-        {
-            if (0 == account())
-            {
-                return 0;
-            }
-        }
 
         main_menu();
         scanf("%d", &input);
@@ -575,6 +665,9 @@ int main()
             break;
         case 3:
             fibonacci_sequence_main();
+            break;
+        case 4:
+            number_counter_main();
             break;
         default:
             break;
