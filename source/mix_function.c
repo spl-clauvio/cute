@@ -87,6 +87,13 @@ void number_counter_return_menu()
     scanf("%d", &over);
 }
 
+void normal_return_menu()
+{
+    int over = 0;
+    printf("\n#####  1.Main menu  #####\n");
+    scanf("%d", &over);
+}
+
 void prime_setting_menu_hang_set()
 {
     int flag_setting_menu_hang_set, hang_set_copy = 0;
@@ -569,18 +576,34 @@ void number_counter_main()
     } while (number_counter_input);
 }
 
+void size_of_types()
+{
+    clear();
+    printf("int:    %-2d byte\n", sizeof(int));
+    printf("char:   %-2d byte\n", sizeof(char));
+    printf("long:   %-2d byte\n", sizeof(long));
+    printf("long2:  %-2d byte\n", sizeof(long long));
+    printf("float:  %-2d byte\n", sizeof(float));
+    printf("double: %-2d byte\n", sizeof(double));
+
+    normal_return_menu();
+    clear();
+}
+
 void main_menu()
 {
     printf("#####       Welcome!       #####\n");
-    Sleep(300);
+    Sleep(200);
     printf("#####    1.Prime number    #####\n");
-    Sleep(300);
+    Sleep(200);
     printf("#####   2.Tower of Hanoi   #####\n");
-    Sleep(300);
+    Sleep(200);
     printf("##### 3.Fibonacci sequence #####\n");
-    Sleep(300);
+    Sleep(200);
     printf("#####   4.Number counter   #####\n");
-    Sleep(300);
+    Sleep(200);
+    printf("#####   5.Size of types    #####\n");
+    Sleep(200);
     printf("#####        0.Exit        #####\n");
     Sleep(200);
     printf("\nMain menu load successfully!\n");
@@ -627,7 +650,7 @@ int account()
                 printf("One trying chance left.\n");
                 break;
             case 2:
-                printf("You have used up all entering chances,program is about to exit.\n");
+                printf("You have used up all entering chances!\nProgram is about to exit.\n\n");
 
                 pause();
                 return 0;
@@ -668,6 +691,9 @@ int main()
             break;
         case 4:
             number_counter_main();
+            break;
+        case 5:
+            size_of_types();
             break;
         default:
             break;
