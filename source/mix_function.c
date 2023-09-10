@@ -3,6 +3,7 @@
 #include <math.h>
 #include <Windows.h>
 #include <string.h>
+#include <my_sort.h>
 
 static int hang_set = 5;
 static int line_spacing = 0;
@@ -576,6 +577,65 @@ void number_counter_main()
     } while (number_counter_input);
 }
 
+void sort_arroy_main_menu()
+{
+    printf("#####       Welcome!       #####\n");
+    printf("#####       1.Bubble       #####\n");
+    printf("#####        0.Exit        #####\n");
+}
+
+void sort_arroy_bubble_sort()
+{
+    int i = 0;
+    int arr[] = {2, 5, 1, 9, 14, 578, -2, -5, -14, 0, 124, 3};
+    int sz = sizeof(arr) / sizeof(arr[0]);
+    int flag = 1;
+    int flag_flag = 0;
+    printf("1->up , 0->down\n");
+    do
+    {
+        scanf("%d", &flag);
+        if (flag == 1)
+        {
+            printf("The arroy will be list \'up\'.\n");
+            flag_flag = 1;
+        }
+        if (flag == 0)
+        {
+            printf("The arroy will be list \'down\'.\n");
+            flag_flag = 1;
+        }
+    } while (!flag_flag);
+
+    buble_sort(arr, sz, flag);
+
+    for (i = 0; i < sz; i++)
+    {
+        printf("%-4d", arr[i]);
+    }
+}
+
+void sort_arroy_main()
+{
+    int sort_arroy_main_input = 0;
+    do
+    {
+        clear();
+        sort_arroy_main_menu();
+        scanf("%d", &sort_arroy_main_input);
+        clear();
+
+        switch (sort_arroy_main_input)
+        {
+        case 1:
+            sort_arroy_bubble_sort();
+            normal_return_menu();
+        default:
+            break;
+        }
+    } while (sort_arroy_main_input);
+}
+
 void size_of_types()
 {
     clear();
@@ -603,6 +663,8 @@ void main_menu()
     printf("#####   4.Number counter   #####\n");
     Sleep(200);
     printf("#####   5.Size of types    #####\n");
+    Sleep(200);
+    printf("#####   6.Sort an arroy    #####\n");
     Sleep(200);
     printf("#####        0.Exit        #####\n");
     Sleep(200);
@@ -694,6 +756,9 @@ int main()
             break;
         case 5:
             size_of_types();
+            break;
+        case 6:
+            sort_arroy_main();
             break;
         default:
             break;
