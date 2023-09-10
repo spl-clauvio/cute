@@ -94,6 +94,12 @@ void normal_return_menu()
     printf("\n#####  1.Main menu  #####\n");
     scanf("%d", &over);
 }
+void game_return_menu()
+{
+    int over = 0;
+    printf("\n#####  1.Game menu  #####\n");
+    scanf("%d", &over);
+}
 
 void prime_setting_menu_hang_set()
 {
@@ -650,24 +656,115 @@ void size_of_types()
     clear();
 }
 
+void trimoku_main_menu()
+{
+    printf("#####       Welcome!       #####\n");
+    printf("#####        1.PVE         #####\n");
+    printf("#####        2.PVP         #####\n");
+    printf("#####      3.Settings      #####\n");
+    printf("#####        0.Exit        #####\n");
+}
+
+void trimoku_chessboard_init(char chessboard[256][256], int line, int column)
+{
+    int i = 0, j = 0;
+    for (i = 0; i < line; i++)
+    {
+        for (j = 0; j < column; j++)
+        {
+            chessboard[i][j] = ' ';
+        }
+    }
+}
+
+void trimoku_chessboard(int line, int column, char chessboard[256][256])
+{
+    int i = 0, j = 0; // line-1 sets
+}
+
+void trimoku_play(int flag, int line, int column)
+{
+    char trimoku_chessboard[256][256];
+    trimoku_chessboard_init(trimoku_chessboard, line, column);
+}
+
+void trimoku_main()
+{
+    int trmoku_main_input = 0;
+    int line = 3, column = 3;
+    do
+    {
+        clear();
+        trimoku_main_menu();
+        scanf("%d", &trmoku_main_input);
+        clear();
+
+        switch (trmoku_main_input)
+        {
+        case 1:
+            trimoku_play(trmoku_main_input, line, column);
+            break;
+        case 2:
+            trimoku_play(trmoku_main_input, line, column);
+            break;
+        default:
+            break;
+        }
+
+    } while (trmoku_main_input);
+}
+
+void game_main_menu()
+{
+    printf("#####       Welcome!       #####\n");
+    printf("#####      1.Trimoku       #####\n");
+    printf("#####        0.Exit        #####\n");
+}
+
+void game_main()
+{
+    int game_main_input = 0;
+    do
+    {
+        clear();
+
+        game_main_menu();
+        scanf("%d", &game_main_input);
+        clear();
+
+        switch (game_main_input)
+        {
+        case 1:
+            trimoku_main();
+            game_return_menu();
+            break;
+        default:
+            break;
+        }
+
+    } while (game_main_input);
+}
+
 void main_menu()
 {
     printf("#####       Welcome!       #####\n");
-    Sleep(200);
+    Sleep(100);
     printf("#####    1.Prime number    #####\n");
-    Sleep(200);
+    Sleep(100);
     printf("#####   2.Tower of Hanoi   #####\n");
-    Sleep(200);
+    Sleep(100);
     printf("##### 3.Fibonacci sequence #####\n");
-    Sleep(200);
+    Sleep(100);
     printf("#####   4.Number counter   #####\n");
     Sleep(200);
     printf("#####   5.Size of types    #####\n");
-    Sleep(200);
+    Sleep(100);
     printf("#####   6.Sort an arroy    #####\n");
-    Sleep(200);
+    Sleep(100);
+    printf("#####        7.Games       #####\n");
+    Sleep(100);
     printf("#####        0.Exit        #####\n");
-    Sleep(200);
+    Sleep(100);
     printf("\nMain menu load successfully!\n");
 }
 
@@ -759,6 +856,9 @@ int main()
             break;
         case 6:
             sort_arroy_main();
+            break;
+        case 7:
+            game_main();
             break;
         default:
             break;
