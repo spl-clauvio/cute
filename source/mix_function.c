@@ -744,7 +744,7 @@ int trimoku_gg_flag_maker(char arroy[256][256], int num, int a, int b, int line,
             continue;
         }
         flag = 1;
-        for (j = 0; j < i; j++)
+        for (j = 0; j <= i; j++)
         {
             if (arroy[a][b - j] != arroy[a][b])
             {
@@ -758,6 +758,42 @@ int trimoku_gg_flag_maker(char arroy[256][256], int num, int a, int b, int line,
                 flag = 0;
             }
         } //+x side check
+        // Finish 1 check
+        if (flag)
+        {
+            return flag;
+        }
+    }
+    if (arroy[2][0] == '*')
+    {
+        i = 0;
+    }
+    // y check
+    for (i = 0; i < num; i++)
+    {
+        if (trimoku_transboard_judgement(line, column, a - i, b))
+        {
+            continue;
+        }
+        if (trimoku_transboard_judgement(line, column, a + num - 1 - i, b))
+        {
+            continue;
+        }
+        flag = 1;
+        for (j = 0; j <= i; j++)
+        {
+            if (arroy[a - j][b] != arroy[a][b])
+            {
+                flag = 0;
+            }
+        } //-y side check
+        for (j = 0; j < num - i; j++)
+        {
+            if (arroy[a][b] != arroy[a + j][b])
+            {
+                flag = 0;
+            }
+        } //+y side check
         // Finish 1 check
         if (flag)
         {
@@ -829,7 +865,7 @@ void trimoku_play(int flag, int line, int column)
 void trimoku_main()
 {
     int trmoku_main_input = 0;
-    int line = 4, column = 4;
+    int line = 6, column = 6;
     do
     {
         clear();
