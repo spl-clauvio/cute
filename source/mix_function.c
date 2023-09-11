@@ -870,7 +870,7 @@ int trimoku_gg_flag_maker(char arroy[256][256], int num, int a, int b, int line,
     return flag;
 }
 
-void trimoku_play(int flag, int line, int column, int player_flag)
+void trimoku_play(int flag, int line, int column, int player_flag, int *win_num)
 {
     char trimoku_chessboard[256][256];
     int end_flag = 1;
@@ -903,7 +903,7 @@ void trimoku_play(int flag, int line, int column, int player_flag)
             trimoku_chessboard_displayer(line, column, trimoku_chessboard);
             if (step)
             {
-                if (trimoku_gg_flag_maker(trimoku_chessboard, 3, arroy[0], arroy[1], line, column, player_flag))
+                if (trimoku_gg_flag_maker(trimoku_chessboard, *win_num, arroy[0], arroy[1], line, column, player_flag))
                 {
                     printf("Game over!\n");
                     if (player_flag > 0)
@@ -969,7 +969,7 @@ void trimoku_play(int flag, int line, int column, int player_flag)
             trimoku_chessboard_displayer(line, column, trimoku_chessboard);
             if (step)
             {
-                if (trimoku_gg_flag_maker(trimoku_chessboard, 3, arroy[0], arroy[1], line, column, player_flag))
+                if (trimoku_gg_flag_maker(trimoku_chessboard, *win_num, arroy[0], arroy[1], line, column, player_flag))
                 {
                     printf("Game over!\n");
                     if (player_flag > 0)
@@ -1005,11 +1005,45 @@ void trimoku_play(int flag, int line, int column, int player_flag)
 void trimoku_setting_menu()
 {
     printf("#####  1.Sequential order  #####\n");
-    printf("#####       Welcome!       #####\n");
+    printf("#####   2.Chessboard size  #####\n");
+    printf("#####   3.Victory number   #####\n");
     printf("#####        0.Exit        #####\n");
 }
 
-void trimoku_setting(int *place, int *line, int *column)
+int trimoku_setting_size_set(int *line, int *column)
+{
+    int input = 0;
+    clear();
+    printf("Set the row number of chessboard.\n");
+    printf("Enter 0 to cancel.\n");
+
+    scanf("%d", &input);
+    if (!input)
+    {
+        return 0;
+    }
+    *line = input;
+    printf("Set the column number of chessboard.\n");
+    printf("Enter 0 to cancel.\n");
+
+    scanf("%d", &input);
+    if (!input)
+    {
+        return 0;
+    }
+    *column = input;
+    return 0;
+}
+
+void trimoku_victory_number_set(int *victory_num)
+{
+    int vn = 3;
+    printf("Enter the victory num.\n");
+    scanf("%d", &vn);
+    *victory_num = vn;
+}
+
+void trimoku_setting(int *place, int *line, int *column, int *victory_num)
 {
     int input = 0;
     clear();
@@ -1023,6 +1057,12 @@ void trimoku_setting(int *place, int *line, int *column)
         clear();
         printf("1:player first\n-1:computer first\n");
         scanf("%d", place);
+    case 2:
+        trimoku_setting_size_set(line, column);
+        break;
+    case 3:
+        trimoku_victory_number_set(victory_num);
+        break;
     default:
         break;
     }
@@ -1031,6 +1071,7 @@ void trimoku_setting(int *place, int *line, int *column)
 void trimoku_main()
 {
     int player_flag = 1;
+    int victory_num = 3;
     int trmoku_main_input = 0;
     int line = 3, column = 3;
     do
@@ -1043,15 +1084,15 @@ void trimoku_main()
         switch (trmoku_main_input)
         {
         case 1:
-            trimoku_play(trmoku_main_input, line, column, player_flag);
+            trimoku_play(trmoku_main_input, line, column, player_flag, &victory_num);
             game_return_menu();
             break;
         case 2:
-            trimoku_play(trmoku_main_input, line, column, player_flag);
+            trimoku_play(trmoku_main_input, line, column, player_flag, &victory_num);
             game_return_menu();
             break;
         case 3:
-            trimoku_setting(&player_flag, &line, &column);
+            trimoku_setting(&player_flag, &line, &column, &victory_num);
             break;
         default:
             break;
