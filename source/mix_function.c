@@ -665,6 +665,13 @@ void trimoku_main_menu()
     printf("#####        0.Exit        #####\n");
 }
 
+void trimoku_stdtrans(int arroy[], int line, int column)
+{
+    int a = arroy[0], b = arroy[1];
+    arroy[1] = a - 1;
+    arroy[0] = line - b;
+}
+
 void trimoku_chessboard_init(char chessboard[256][256], int line, int column)
 {
     int i = 0, j = 0;
@@ -677,21 +684,152 @@ void trimoku_chessboard_init(char chessboard[256][256], int line, int column)
     }
 }
 
+void trimoku_chessboard_displayer(int line, int column, char chessboard[256][256])
+{
+    int i = 0, j = 0;
+    for (i = 0; i < line - 1; i++)
+    {
+        for (j = 0; j < column - 1; j++)
+        {
+            printf(" %c |", chessboard[i][j]);
+        }
+        printf(" %c \n", chessboard[i][j]);
+        for (j = 0; j < column - 1; j++)
+        {
+            printf("---|", chessboard[i][j]);
+        }
+        j++;
+        printf("---\n");
+    }
+
+    for (j = 0; j < column - 1; j++)
+    {
+        printf(" %c |", chessboard[i][j]);
+    }
+    printf(" %c \n", chessboard[i][j]);
+}
+
 void trimoku_chessboard(int line, int column, char chessboard[256][256])
 {
     int i = 0, j = 0; // line-1 sets
 }
 
+int trimoku_transboard_judgement(int line, int column, int a, int b)
+{
+    if (a >= line)
+        return 1;
+    if (a < 0)
+        return 1;
+    if (b >= column)
+        return 1;
+    if (b < 0)
+        return 1;
+    return 0;
+}
+
+int trimoku_gg_flag_maker(char arroy[256][256], int num, int a, int b, int line, int column, char player)
+{
+    int i = 0, j = 0;
+    int flag = 0;
+
+    // x check
+    for (i = 0; i < num; i++)
+    {
+        if (trimoku_transboard_judgement(line, column, a, b - i))
+        {
+            continue;
+        }
+        if (trimoku_transboard_judgement(line, column, a, b + num - 1 - i))
+        {
+            continue;
+        }
+        flag = 1;
+        for (j = 0; j < i; j++)
+        {
+            if (arroy[a][b - j] != arroy[a][b])
+            {
+                flag = 0;
+            }
+        } //-x side check
+        for (j = 0; j < num - i; j++)
+        {
+            if (arroy[a][b] != arroy[a][b + j])
+            {
+                flag = 0;
+            }
+        } //+x side check
+        // Finish 1 check
+        if (flag)
+        {
+            return flag;
+        }
+    }
+    return flag;
+}
+
 void trimoku_play(int flag, int line, int column)
 {
     char trimoku_chessboard[256][256];
+    int end_flag = 1;
+    int player_flag = 1;
+    int ai_flag = 0;
+    char a = ' ', b = ' ';
+    int arroy[2] = {0, 0};
+    int step = 0;
+
+    if (flag == 1)
+    {
+        ai_flag = 1;
+    }
     trimoku_chessboard_init(trimoku_chessboard, line, column);
+    if (ai_flag) // PVE
+    {
+        do
+        {
+            trimoku_chessboard_displayer(line, column, trimoku_chessboard);
+        } while (end_flag);
+    }
+    else // PVP
+    {
+        do
+        {
+            if (player_flag > 0)
+                printf("P%d:\n\n", 1);
+            else
+                printf("P%d:\n\n", 2);
+
+            player_flag = -player_flag;
+
+            trimoku_chessboard_displayer(line, column, trimoku_chessboard);
+            if (step)
+            {
+                if (trimoku_gg_flag_maker(trimoku_chessboard, 3, arroy[0], arroy[1], line, column, player_flag))
+                {
+                    printf("game over!\n");
+                    // pause();
+                    break;
+                }
+            }
+
+            scanf("%d,%d", &arroy[0], &arroy[1]);
+            clear();
+            step++;
+
+            trimoku_stdtrans(arroy, line, column);
+
+            if (player_flag > 0)
+                trimoku_chessboard[arroy[0]][arroy[1]] = '#';
+            else
+                trimoku_chessboard[arroy[0]][arroy[1]] = '*';
+
+        } while (end_flag);
+    }
 }
 
 void trimoku_main()
 {
     int trmoku_main_input = 0;
-    int line = 3, column = 3;
+    int line = 4, column = 4;
     do
     {
         clear();
@@ -703,9 +841,11 @@ void trimoku_main()
         {
         case 1:
             trimoku_play(trmoku_main_input, line, column);
+            game_return_menu();
             break;
         case 2:
             trimoku_play(trmoku_main_input, line, column);
+            game_return_menu();
             break;
         default:
             break;
@@ -748,23 +888,23 @@ void game_main()
 void main_menu()
 {
     printf("#####       Welcome!       #####\n");
-    Sleep(100);
+    // Sleep(100);
     printf("#####    1.Prime number    #####\n");
-    Sleep(100);
+    // Sleep(100);
     printf("#####   2.Tower of Hanoi   #####\n");
-    Sleep(100);
+    //  Sleep(100);
     printf("##### 3.Fibonacci sequence #####\n");
-    Sleep(100);
+    //  Sleep(100);
     printf("#####   4.Number counter   #####\n");
-    Sleep(200);
+    // Sleep(100);
     printf("#####   5.Size of types    #####\n");
-    Sleep(100);
+    // Sleep(100);
     printf("#####   6.Sort an arroy    #####\n");
-    Sleep(100);
+    // Sleep(100);
     printf("#####        7.Games       #####\n");
-    Sleep(100);
+    // Sleep(100);
     printf("#####        0.Exit        #####\n");
-    Sleep(100);
+    // Sleep(100);
     printf("\nMain menu load successfully!\n");
 }
 
@@ -822,7 +962,7 @@ int account()
 int main()
 {
     int input = 0;
-    int password_flag = 1;
+    int password_flag = 0;
 
     if (password_flag)
     {
