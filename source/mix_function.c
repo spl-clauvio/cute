@@ -102,6 +102,13 @@ void game_return_menu()
     scanf("%d", &over);
 }
 
+void trimoku_return_menu()
+{
+    int over = 0;
+    printf("\n#####  1.Trimoku menu  #####\n");
+    scanf("%d", &over);
+}
+
 void prime_setting_menu_hang_set()
 {
     int flag_setting_menu_hang_set, hang_set_copy = 0;
@@ -594,10 +601,21 @@ void sort_arroy_main_menu()
 void sort_arroy_bubble_sort()
 {
     int i = 0;
-    int arr[] = {2, 5, 1, 9, 14, 578, -2, -5, -14, 0, 124, 3};
-    int sz = sizeof(arr) / sizeof(arr[0]);
+    int arr[256] = {0};
+    int sz = 0;
     int flag = 1;
     int flag_flag = 0;
+    printf("Enter an arroy(at most 256 members)\nSeparate members by ',' or blankspace.\nUse 'enter' to end.\n");
+    do
+    {
+        scanf("%d", &arr[sz]);
+        sz++;
+        if (sz > 256)
+        {
+            break;
+        }
+    } while (getchar() != '\n');
+
     printf("1->up , 0->down\n");
     do
     {
@@ -870,8 +888,27 @@ int trimoku_gg_flag_maker(char arroy[256][256], int num, int a, int b, int line,
     return flag;
 }
 
+int trimoku_draw_judgement(char chessboard[256][256], int line, int column)
+{
+    int i = 0, j = 0;
+    int flag = 1;
+    for (i = 0; i < line; i++)
+    {
+        for (j = 0; j < column; j++)
+        {
+            if (chessboard[i][j] == ' ')
+            {
+                flag = 0;
+                return flag;
+            }
+        }
+    }
+    return flag;
+}
+
 void trimoku_play(int flag, int line, int column, int player_flag, int *win_num)
 {
+    int draw_flag = 0;
     char trimoku_chessboard[256][256];
     int end_flag = 1;
     int filter = 0;
@@ -893,6 +930,11 @@ void trimoku_play(int flag, int line, int column, int player_flag, int *win_num)
     {
         do
         {
+            if (trimoku_draw_judgement(trimoku_chessboard, line, column))
+            {
+                printf("Five even!\n");
+                draw_flag = 1;
+            }
             if (player_flag > 0)
                 printf("P%d:\n\n", 1);
             else
@@ -910,6 +952,10 @@ void trimoku_play(int flag, int line, int column, int player_flag, int *win_num)
                         printf("P%d win!\n\n", 1);
                     else
                         printf("P%d win!\n\n", 2);
+                    break;
+                }
+                if (draw_flag)
+                {
                     break;
                 }
             }
@@ -959,6 +1005,11 @@ void trimoku_play(int flag, int line, int column, int player_flag, int *win_num)
     {
         do
         {
+            if (trimoku_draw_judgement(trimoku_chessboard, line, column))
+            {
+                printf("Five even!\n");
+                draw_flag = 1;
+            }
             if (player_flag > 0)
                 printf("P%d:\n\n", 1);
             else
@@ -976,6 +1027,10 @@ void trimoku_play(int flag, int line, int column, int player_flag, int *win_num)
                         printf("P%d win!\n\n", 1);
                     else
                         printf("P%d win!\n\n", 2);
+                    break;
+                }
+                if (draw_flag)
+                {
                     break;
                 }
             }
@@ -1007,6 +1062,7 @@ void trimoku_setting_menu()
     printf("#####  1.Sequential order  #####\n");
     printf("#####   2.Chessboard size  #####\n");
     printf("#####   3.Victory number   #####\n");
+    printf("#####       4.Guide        #####\n");
     printf("#####        0.Exit        #####\n");
 }
 
@@ -1043,6 +1099,14 @@ void trimoku_victory_number_set(int *victory_num)
     *victory_num = vn;
 }
 
+void trimoku_guide_menu()
+{
+    clear();
+    printf("Developed by spl-clauvio\n");
+    printf("Copyright by spl-clauvio\n");
+    printf("\n\n");
+}
+
 void trimoku_setting(int *place, int *line, int *column, int *victory_num)
 {
     int input = 0;
@@ -1062,6 +1126,9 @@ void trimoku_setting(int *place, int *line, int *column, int *victory_num)
         break;
     case 3:
         trimoku_victory_number_set(victory_num);
+        break;
+    case 4:
+        trimoku_guide_menu();
         break;
     default:
         break;
@@ -1093,6 +1160,7 @@ void trimoku_main()
             break;
         case 3:
             trimoku_setting(&player_flag, &line, &column, &victory_num);
+            trimoku_return_menu();
             break;
         default:
             break;
@@ -1101,10 +1169,177 @@ void trimoku_main()
     } while (trmoku_main_input);
 }
 
+void minesweeper_main_menu()
+{
+    printf("#####         Welcome!       #####\n");
+    printf("#####          1.Play        #####\n");
+    printf("#####        2.Settings      #####\n");
+    printf("#####          0.Exit        #####\n");
+}
+
+void minsweeper_mine_generator(int line, int column)
+{
+    int i = 0, j = 0;
+    rand();
+    i = rand() % (line + 1);
+    j = rand() % (column + 1);
+}
+
+void minesweeper_board_displayer(int line, int column)
+{
+    int i = 0, j = 0;
+    for (i = 0; i < line; i++)
+    {
+        printf("   ");
+        for (j = 0; j < column; j++)
+        {
+            printf("+---");
+        }
+        printf("+\n");
+        printf("%-3d", line - i);
+
+        for (j = 0; j < column; j++)
+        {
+            printf("| %c ", '@');
+        }
+        printf("|\n");
+    }
+    printf("   ");
+    for (j = 0; j < column; j++)
+    {
+        printf("+---");
+    }
+    printf("+\n");
+    printf("y/x ");
+    for (j = 0; j < column; j++)
+    {
+        printf(" %-3d", j + 1);
+    }
+}
+
+void minesweeper_play(int line, int column)
+{
+    minesweeper_board_displayer(line, column);
+}
+
+void minesweeper_setting_menu()
+{
+    printf("#####      1.Difficulty set      #####\n");
+    printf("#####      2.Minefilds size      #####\n");
+    printf("#####           0.Exit           #####\n");
+}
+
+void minesweeper_difficulty_set(int *line, int *column, int *mine)
+{
+    int default_difficulty_levels = 1;
+    printf("#####          1.Easy          #####\n");
+    printf("#####       2.Middle set       #####\n");
+    printf("#####      3.Professional      #####\n");
+    printf("#####         0.Cancel         #####\n");
+
+    scanf("%d", &default_difficulty_levels);
+
+    switch (default_difficulty_levels)
+    {
+    case 1:
+        *line = 9, *column = 9, *mine = 10;
+        break;
+    case 2:
+        *line = 16, *column = 16, *mine = 40;
+        break;
+    case 3:
+        *line = 16, *column = 30, *mine = 99;
+        break;
+    case 0:
+        printf("Operation is canceled.\n");
+        pause();
+        break;
+    default:
+        printf("Err input,operation is canceled.\n");
+        pause();
+
+        break;
+    }
+}
+
+void minesweeper_broad_set(int *a, int *b)
+{
+    int err_flag = 0;
+    do
+    {
+
+        printf("Enter the row number.\n");
+        scanf("%d", a);
+        printf("Enter the column number.\n");
+        scanf("%d", b);
+        if (*a < 0 || *b < 0)
+        {
+            err_flag = 1;
+        }
+        else
+        {
+            err_flag = 0;
+        }
+
+    } while (err_flag);
+}
+
+void minesweeper_setting(int *a, int *b, int *c)
+{
+    int input = 0;
+    do
+    {
+        clear();
+        minesweeper_setting_menu();
+        scanf("%d", &input);
+        clear();
+
+        switch (input)
+        {
+        case 1:
+            minesweeper_difficulty_set(a, b, c);
+            break;
+        case 2:
+            minesweeper_broad_set(a, b);
+            break;
+        default:
+            break;
+        }
+    } while (input);
+}
+
+void minesweeper_main()
+{
+    int input = 0;
+    int line = 9, column = 9, mine = 10;
+
+    do
+    {
+        clear();
+        minesweeper_main_menu();
+        scanf("%d", &input);
+        clear();
+
+        switch (input)
+        {
+        case 1:
+            minesweeper_play(line, column);
+            game_return_menu();
+            break;
+        case 2:
+            minesweeper_setting(&line, &column, &mine);
+            break;
+        default:
+            break;
+        }
+    } while (input);
+}
+
 void game_main_menu()
 {
     printf("#####       Welcome!       #####\n");
     printf("#####      1.Trimoku       #####\n");
+    printf("#####     2.Minesweep      #####\n");
     printf("#####        0.Exit        #####\n");
 }
 
@@ -1123,6 +1358,9 @@ void game_main()
         {
         case 1:
             trimoku_main();
+            break;
+        case 2:
+            minesweeper_main();
             break;
         default:
             break;
