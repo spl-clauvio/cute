@@ -681,6 +681,7 @@ void trimoku_main_menu()
     printf("#####        1.PVE         #####\n");
     printf("#####        2.PVP         #####\n");
     printf("#####      3.Settings      #####\n");
+    printf("#####       4 Guide        #####\n");
     printf("#####        0.Exit        #####\n");
 }
 
@@ -1062,7 +1063,6 @@ void trimoku_setting_menu()
     printf("#####  1.Sequential order  #####\n");
     printf("#####   2.Chessboard size  #####\n");
     printf("#####   3.Victory number   #####\n");
-    printf("#####       4.Guide        #####\n");
     printf("#####        0.Exit        #####\n");
 }
 
@@ -1127,9 +1127,6 @@ void trimoku_setting(int *place, int *line, int *column, int *victory_num)
     case 3:
         trimoku_victory_number_set(victory_num);
         break;
-    case 4:
-        trimoku_guide_menu();
-        break;
     default:
         break;
     }
@@ -1162,6 +1159,10 @@ void trimoku_main()
             trimoku_setting(&player_flag, &line, &column, &victory_num);
             trimoku_return_menu();
             break;
+        case 4:
+            trimoku_guide_menu();
+            trimoku_return_menu();
+            break;
         default:
             break;
         }
@@ -1174,7 +1175,23 @@ void minesweeper_main_menu()
     printf("#####         Welcome!       #####\n");
     printf("#####          1.Play        #####\n");
     printf("#####        2.Settings      #####\n");
+    printf("#####         3.Guide        #####\n");
     printf("#####          0.Exit        #####\n");
+}
+
+void minesweeper_guide()
+{
+    clear();
+    printf("Developed by spl-clauvio\n");
+    printf("Copyright by spl-clauvio\n");
+    printf("\n\n");
+}
+
+void minesweeper_return_menu()
+{
+    int over = 0;
+    printf("\n#####  1.Minesweeper menu  #####\n");
+    scanf("%d", &over);
 }
 
 void minesweeper_stdtrans(int input[], int line, int column)
@@ -1247,7 +1264,7 @@ void minesweeper_mine_generator(int line, int column, int mine, int mine_layer[1
     }
 }
 
-void minesweeper_board_displayer(int flag, int line, int column, int num_layer[100][100], int display_chose_layer[100][100])
+void minesweeper_board_displayer(int flag, int line, int column, int num_layer[100][100], int display_chose_layer[100][100], int sign_layer[100][100], int mine_layer[100][100])
 {
     int i = 0, j = 0;
     for (i = 0; i < line; i++)
@@ -1262,15 +1279,41 @@ void minesweeper_board_displayer(int flag, int line, int column, int num_layer[1
 
         for (j = 0; j < column; j++)
         {
-            if (display_chose_layer[i][j])
+            if (flag)
             {
-                if (num_layer[i][j])
-                    printf("| %d ", num_layer[i][j]);
+                if (mine_layer[i][j])
+
+                    printf("|***");
+                else if (display_chose_layer[i][j])
+                {
+                    if (num_layer[i][j])
+                        printf("| %d ", num_layer[i][j]);
+                    else
+                        printf("| %c ", ' ');
+                }
+                else if (sign_layer[i][j])
+                {
+                    printf("|!!!");
+                }
                 else
-                    printf("| %c ", ' ');
+                    printf("| %c ", '#');
             }
             else
-                printf("| %c ", '#');
+            {
+                if (display_chose_layer[i][j])
+                {
+                    if (num_layer[i][j])
+                        printf("| %d ", num_layer[i][j]);
+                    else
+                        printf("| %c ", ' ');
+                }
+                else if (sign_layer[i][j])
+                {
+                    printf("|!!!");
+                }
+                else
+                    printf("| %c ", '#');
+            }
         }
         printf("|\n");
     }
@@ -1321,6 +1364,7 @@ void minesweeper_play(int line, int column, int mine)
     int mine_layer[100][100] = {0};
     int num_layer[100][100] = {0};
     int display_chose_layer[100][100] = {0};
+    int sign_layer[100][100] = {0};
 
     int input[2] = {0};
 
@@ -1329,6 +1373,9 @@ void minesweeper_play(int line, int column, int mine)
     int first_expload_flag = 0;
     int victory_flag = 1;
     int demining_num = 0;
+    int op_check = 0;
+    int op_check_finish_flag = 1;
+    int exit_flag = 0;
 
     minesweeper_mine_generator(line, column, mine, mine_layer);
 
@@ -1345,7 +1392,7 @@ void minesweeper_play(int line, int column, int mine)
         }
 
         // minesweeper_board_displayer(1, line, column, mine_layer, display_chose_layer);
-        minesweeper_board_displayer(0, line, column, num_layer, display_chose_layer);
+        minesweeper_board_displayer(0, line, column, num_layer, display_chose_layer, sign_layer, mine_layer);
 
         if (demining_num == line * column - mine)
         {
@@ -1354,10 +1401,56 @@ void minesweeper_play(int line, int column, int mine)
             break;
         }
 
-        printf("Enter a coordinate.(x,y)\n");
-        scanf("%d %d", &input[0], &input[1]);
+        do
+        {
+            op_check_finish_flag = 1;
 
-        minesweeper_stdtrans(input, line, column);
+            printf("Enter a coordinate(x,y),use blankspace to separate x from y.\n");
+            printf("Exit the game by entering (0,0)\n");
+
+            scanf("%d %d", &input[0], &input[1]);
+
+            if ((input[0] == 0) && (input[1] == 0))
+            {
+                exit_flag = 1;
+                break;
+            }
+
+            minesweeper_stdtrans(input, line, column);
+
+            printf("Comfirm your oparation.\n");
+            printf("\'0\' -> check the coordinate.\n");
+            printf("\'1\' -> put/remove a sign.\n");
+            printf("Enter any other num to cancel.\n");
+            scanf("%d", &op_check);
+
+            switch (op_check)
+            {
+            case 0:
+                op_check_finish_flag = 0;
+                break;
+            case 1:
+                if (sign_layer[input[0]][input[1]])
+                {
+                    sign_layer[input[0]][input[1]] = 0;
+                }
+                else
+                {
+                    sign_layer[input[0]][input[1]] = 1;
+                }
+                clear();
+                minesweeper_board_displayer(0, line, column, num_layer, display_chose_layer, sign_layer, mine_layer);
+                break;
+            default:
+                break;
+            }
+
+        } while (op_check_finish_flag);
+
+        if (exit_flag)
+        {
+            break;
+        }
 
         if (first_input_flag)
         {
@@ -1399,7 +1492,10 @@ void minesweeper_play(int line, int column, int mine)
         {
             if (mine_layer[input[0]][input[1]])
             {
-                printf("EXplosion!\n");
+                clear();
+                printf("\aEXplosion!\n");
+                minesweeper_board_displayer(1, line, column, num_layer, display_chose_layer, sign_layer, mine_layer);
+
                 break;
             }
         }
@@ -1509,10 +1605,14 @@ void minesweeper_main()
         {
         case 1:
             minesweeper_play(line, column, mine);
-            game_return_menu();
+            minesweeper_return_menu();
             break;
         case 2:
             minesweeper_setting(&line, &column, &mine);
+            break;
+        case 3:
+            minesweeper_guide();
+            minesweeper_return_menu();
             break;
         default:
             break;
