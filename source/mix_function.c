@@ -1177,15 +1177,77 @@ void minesweeper_main_menu()
     printf("#####          0.Exit        #####\n");
 }
 
-void minsweeper_mine_generator(int line, int column)
+void minesweeper_stdtrans(int input[], int line, int column)
 {
-    int i = 0, j = 0;
-    rand();
-    i = rand() % (line + 1);
-    j = rand() % (column + 1);
+    int a = input[0], b = input[1];
+    input[1] = a - 1;
+    input[0] = line - b;
 }
 
-void minesweeper_board_displayer(int line, int column)
+int minesweeper_mine_number_return(int line, int column, int a, int b, int mine_layer[100][100])
+{
+    int i = 0, j = 0, ret = 0;
+    for (i = 0; i < 3; i++)
+    {
+        for (j = 0; j < 3; j++)
+        {
+            if ((a - 1 + i >= 0 && a - 1 + i < line) && (b - 1 + j >= 0 && b - 1 + j < column))
+            {
+                if (mine_layer[a - 1 + i][b - 1 + j])
+                {
+                    ret++;
+                }
+            }
+        }
+    }
+    return ret;
+}
+
+void minesweeper_num_layer_generator(int line, int column, int mine_layer[100][100], int num_layer[100][100])
+{
+    int i = 0, j = 0;
+    for (i = 0; i < line; i++)
+    {
+        for (j = 0; j < column; j++)
+        {
+            num_layer[i][j] = minesweeper_mine_number_return(line, column, i, j, mine_layer);
+        }
+    }
+}
+
+void minesweeper_mine_generator(int line, int column, int mine, int mine_layer[100][100])
+{
+    int i = 0, j = 0, count = 0, check = 0, check_flag = 0, filter = 0;
+    int rand_line = 0, rand_column = 0;
+    int rand_check_arroy[100][101] = {0};
+    filter = rand();
+
+    for (count = 0; count < mine; count++)
+    {
+        do
+        {
+            check_flag = 0;
+            rand_line = rand() % (line);
+            rand_column = rand() % (column);
+
+            rand_check_arroy[rand_line][rand_check_arroy[rand_line][0] + 1] = rand_column;
+
+            for (check = 0; check < rand_check_arroy[rand_line][0]; check++)
+            {
+                if (rand_check_arroy[line][check + 1] == rand_column)
+                {
+                    check_flag = 1;
+                }
+            }
+        } while (check_flag);
+
+        rand_check_arroy[rand_line][0]++; // count line members
+
+        mine_layer[rand_line][rand_column] = 1;
+    }
+}
+
+void minesweeper_board_displayer(int flag, int line, int column, int num_layer[100][100], int display_chose_layer[100][100])
 {
     int i = 0, j = 0;
     for (i = 0; i < line; i++)
@@ -1200,7 +1262,15 @@ void minesweeper_board_displayer(int line, int column)
 
         for (j = 0; j < column; j++)
         {
-            printf("| %c ", '@');
+            if (display_chose_layer[i][j])
+            {
+                if (num_layer[i][j])
+                    printf("| %d ", num_layer[i][j]);
+                else
+                    printf("| %c ", ' ');
+            }
+            else
+                printf("| %c ", '#');
         }
         printf("|\n");
     }
@@ -1215,11 +1285,126 @@ void minesweeper_board_displayer(int line, int column)
     {
         printf(" %-3d", j + 1);
     }
+    printf("\n");
 }
 
-void minesweeper_play(int line, int column)
+void minesweeper_0_spread(int *demining_num, int line, int column, int x, int y, int num_layer[100][100], int display_chose_layer[100][100])
 {
-    minesweeper_board_displayer(line, column);
+    int i = 0, j = 0;
+    if (!num_layer[x][y])
+    {
+        (*demining_num)++;
+        display_chose_layer[x][y] = 1;
+        for (i = x - 1; i < x + 2; i++)
+        {
+            for (j = y - 1; j < y + 2; j++)
+            {
+                if ((i >= 0 && i < line) && (j >= 0 && j < column))
+                {
+                    if (!display_chose_layer[i][j])
+                    {
+                        minesweeper_0_spread(demining_num, line, column, i, j, num_layer, display_chose_layer);
+                    }
+                }
+            }
+        }
+    }
+    else
+    {
+        (*demining_num)++;
+        display_chose_layer[x][y] = 1;
+    }
+}
+
+void minesweeper_play(int line, int column, int mine)
+{
+    int mine_layer[100][100] = {0};
+    int num_layer[100][100] = {0};
+    int display_chose_layer[100][100] = {0};
+
+    int input[2] = {0};
+
+    int first_input_flag = 1, i = 0, j = 0;
+    int reinit_i = 0, reinit_j = 0;
+    int first_expload_flag = 0;
+    int victory_flag = 1;
+    int demining_num = 0;
+
+    minesweeper_mine_generator(line, column, mine, mine_layer);
+
+    minesweeper_num_layer_generator(line, column, mine_layer, num_layer);
+
+    do
+    {
+        clear();
+
+        if (!first_input_flag)
+        {
+            minesweeper_0_spread(&demining_num, line, column, input[0], input[1], num_layer, display_chose_layer);
+            first_input_flag = 0;
+        }
+
+        // minesweeper_board_displayer(1, line, column, mine_layer, display_chose_layer);
+        minesweeper_board_displayer(0, line, column, num_layer, display_chose_layer);
+
+        if (demining_num == line * column - mine)
+        {
+            victory_flag = 0;
+            printf("Victory!\n");
+            break;
+        }
+
+        printf("Enter a coordinate.(x,y)\n");
+        scanf("%d %d", &input[0], &input[1]);
+
+        minesweeper_stdtrans(input, line, column);
+
+        if (first_input_flag)
+        {
+
+            do
+            {
+                first_expload_flag = 0;
+                if (num_layer[input[0]][input[1]])
+                {
+                    first_expload_flag = 1;
+                    for (i = 0; i < 3; i++)
+                    {
+                        for (j = 0; j < 3; j++)
+                        {
+                            if ((input[0] - 1 + i >= 0 && input[0] - 1 + i < line) && (input[1] - 1 + j >= 0 && input[1] - 1 + j < column))
+                            {
+                                if (mine_layer[input[0] - 1 + i][input[1] - 1 + j])
+                                {
+                                    for (reinit_i = 0; reinit_i < line; reinit_i++)
+                                    {
+                                        for (reinit_j = 0; reinit_j < column; reinit_j++)
+                                        {
+                                            mine_layer[reinit_i][reinit_j] = 0;
+                                            num_layer[reinit_i][reinit_j] = 0;
+                                        } // reinit
+                                    }
+                                    minesweeper_mine_generator(line, column, mine, mine_layer);
+
+                                    minesweeper_num_layer_generator(line, column, mine_layer, num_layer);
+                                }
+                            }
+                        }
+                    }
+                }
+            } while (first_expload_flag);
+            first_input_flag = 0;
+        }
+        else
+        {
+            if (mine_layer[input[0]][input[1]])
+            {
+                printf("EXplosion!\n");
+                break;
+            }
+        }
+
+    } while (victory_flag);
 }
 
 void minesweeper_setting_menu()
@@ -1323,7 +1508,7 @@ void minesweeper_main()
         switch (input)
         {
         case 1:
-            minesweeper_play(line, column);
+            minesweeper_play(line, column, mine);
             game_return_menu();
             break;
         case 2:
