@@ -1408,7 +1408,10 @@ void minesweeper_play(int line, int column, int mine)
             printf("Enter a coordinate(x,y),use blankspace to separate x from y.\n");
             printf("Exit the game by entering (0,0)\n");
 
-            scanf("%d %d", &input[0], &input[1]);
+            do
+            {
+                scanf("%d %d", &input[0], &input[1]);
+            } while (input[0] < 0 || input[0] > column || input[1] < 0 || input[1] > line);
 
             if ((input[0] == 0) && (input[1] == 0))
             {

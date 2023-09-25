@@ -16,16 +16,22 @@ int main()
     printf("%d\n", multiple);
     putchar(65);
     putchar('\n');
-    printf("%d", sizeof(arroy1));
-    do
+    printf("%d\n", sizeof(arroy1));
+    int *p = &i;
+    printf("%p\n%p\n%d\n", p, i, *p);
+
+    char ret = 0;
+    char ch = 0;
+    while (1)
     {
-        scanf("%d", &num);
-        arroy[sz] = num;
-        sz++;
-    } while (getchar() != '\n');
-    for (i = 0; i < sz; i++)
-    {
-        printf("%4d", arroy[i]);
+        ret = scanf(" %c", &ch);
+        if (ret != EOF)
+        {
+            printf("%c\n", ch);
+        }
+        else
+            break;
+        //  getchar();
     }
     system("pause");
     return 0;
