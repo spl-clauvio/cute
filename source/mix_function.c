@@ -1631,6 +1631,56 @@ void game_main_menu()
     printf("#####        0.Exit        #####\n");
 }
 
+void myth_main_menu()
+{
+    printf("#####    1.Prime number    #####\n");
+    printf("#####   2.Tower of Hanoi   #####\n");
+    printf("##### 3.Fibonacci sequence #####\n");
+    printf("#####   4.Number counter   #####\n");
+    printf("#####   5.Size of types    #####\n");
+    printf("#####   6.Sort an arroy    #####\n");
+    printf("#####        0.Exit        #####\n");
+}
+
+void myth_main()
+{
+    int myth_main_input = 0;
+    do
+    {
+        clear();
+
+        myth_main_input = 0;
+        myth_main_menu();
+        scanf("%d", &myth_main_input);
+        clear();
+
+        switch (myth_main_input)
+        {
+        case 1:
+            prime_main();
+            break;
+        case 2:
+            hanoi_main();
+            break;
+        case 3:
+            fibonacci_sequence_main();
+            break;
+        case 4:
+            number_counter_main();
+            break;
+        case 5:
+            size_of_types();
+            break;
+        case 6:
+            sort_arroy_main();
+            break;
+        default:
+            break;
+        }
+
+    } while (myth_main_input);
+}
+
 void game_main()
 {
     int game_main_input = 0;
@@ -1660,23 +1710,9 @@ void game_main()
 void main_menu()
 {
     printf("#####       Welcome!       #####\n");
-    // Sleep(100);
-    printf("#####    1.Prime number    #####\n");
-    // Sleep(100);
-    printf("#####   2.Tower of Hanoi   #####\n");
-    //  Sleep(100);
-    printf("##### 3.Fibonacci sequence #####\n");
-    //  Sleep(100);
-    printf("#####   4.Number counter   #####\n");
-    // Sleep(100);
-    printf("#####   5.Size of types    #####\n");
-    // Sleep(100);
-    printf("#####   6.Sort an arroy    #####\n");
-    // Sleep(100);
-    printf("#####        7.Games       #####\n");
-    // Sleep(100);
+    printf("#####        1.Myth        #####\n");
+    printf("#####        2.Games       #####\n");
     printf("#####        0.Exit        #####\n");
-    // Sleep(100);
     printf("\nMain menu load successfully!\n");
 }
 
@@ -1753,24 +1789,9 @@ int main()
         switch (input)
         {
         case 1:
-            prime_main();
+            myth_main();
             break;
         case 2:
-            hanoi_main();
-            break;
-        case 3:
-            fibonacci_sequence_main();
-            break;
-        case 4:
-            number_counter_main();
-            break;
-        case 5:
-            size_of_types();
-            break;
-        case 6:
-            sort_arroy_main();
-            break;
-        case 7:
             game_main();
             break;
         default:
