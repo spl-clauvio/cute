@@ -14,6 +14,14 @@ static char hanoi_beginning_pole = 'A';
 static char hanoi_endding_pole = 'C';
 static char hanoi_transit_pole = 'B';
 
+struct person
+{
+    char name[20];
+    char sex[5];
+    char tele[12];
+    int height;
+};
+
 void clear()
 {
     system("cls");
@@ -914,6 +922,8 @@ void trimoku_play(int flag, int line, int column, int player_flag, int *win_num)
     int end_flag = 1;
     int filter = 0;
     int ai_flag = 0;
+    int input_check = 1;
+    char ch = 1;
     char a = ' ', b = ' ';
     int arroy[2] = {0, 0};
     int arroy_copy[2] = {0, 0};
@@ -965,7 +975,23 @@ void trimoku_play(int flag, int line, int column, int player_flag, int *win_num)
             {
                 do
                 {
-                    scanf("%d,%d", &arroy[0], &arroy[1]);
+                    do
+                    {
+                        input_check = 1;
+                        if (2 == scanf("%d,%d", &arroy[0], &arroy[1]))
+                        {
+                            input_check = 0;
+                        }
+                        else
+                        {
+                            while ((ch = getchar()) != '\n')
+                            {
+                                ;
+                            }
+                        }
+
+                    } while (input_check);
+
                     arroy_copy[0] = arroy[0];
                     arroy_copy[1] = arroy[1];
 
@@ -1038,7 +1064,22 @@ void trimoku_play(int flag, int line, int column, int player_flag, int *win_num)
 
             do
             {
-                scanf("%d,%d", &arroy[0], &arroy[1]);
+                do
+                {
+                    input_check = 1;
+                    if (2 == scanf("%d,%d", &arroy[0], &arroy[1]))
+                    {
+                        input_check = 0;
+                    }
+                    else
+                    {
+                        while ((ch = getchar()) != '\n')
+                        {
+                            ;
+                        }
+                    }
+
+                } while (input_check);
                 arroy_copy[0] = arroy[0];
                 arroy_copy[1] = arroy[1];
 
@@ -1365,7 +1406,7 @@ void minesweeper_play(int line, int column, int mine)
     int num_layer[100][100] = {0};
     int display_chose_layer[100][100] = {0};
     int sign_layer[100][100] = {0};
-
+    int ch = 1;
     int input[2] = {0};
 
     int first_input_flag = 1, i = 0, j = 0;
@@ -1376,6 +1417,7 @@ void minesweeper_play(int line, int column, int mine)
     int op_check = 0;
     int op_check_finish_flag = 1;
     int exit_flag = 0;
+    int input_check = 1;
 
     minesweeper_mine_generator(line, column, mine, mine_layer);
 
@@ -1410,7 +1452,22 @@ void minesweeper_play(int line, int column, int mine)
 
             do
             {
-                scanf("%d %d", &input[0], &input[1]);
+                do
+                {
+                    input_check = 1;
+                    if (2 == scanf("%d %d", &input[0], &input[1]))
+                    {
+                        input_check = 0;
+                    }
+                    else
+                    {
+                        while ((ch = getchar()) != '\n')
+                        {
+                            ;
+                        }
+                    }
+
+                } while (input_check);
             } while (input[0] < 0 || input[0] > column || input[1] < 0 || input[1] > line);
 
             if ((input[0] == 0) && (input[1] == 0))
@@ -1681,6 +1738,184 @@ void myth_main()
     } while (myth_main_input);
 }
 
+void binary_return_menu()
+{
+    int over = 0;
+    printf("\n#####  1.Binary menu  #####\n");
+    scanf("%d", &over);
+}
+
+void binary_1_num()
+{
+    unsigned int input = 0;
+    int num = 0, i = 0;
+    int binary[32] = {0};
+
+    printf("Enter a num(10)\n");
+    scanf("%d", &input);
+
+    int count = 0;
+
+    printf("\nThe binary of %d in memory is ", input);
+
+    while (input)
+    {
+        if (input % 2)
+        {
+            count++;
+            binary[i] = 1;
+        }
+        else
+        {
+            binary[i] = 0;
+        }
+        input /= 2;
+        i++;
+    }
+    i--;
+
+    while (i + 1)
+    {
+        printf("%d", binary[i]);
+        i--;
+    }
+
+    printf("\n%d num 1 is in it\n", count);
+}
+
+int binary_1_num1()
+{
+    int input = 0;
+    int count = 0;
+    for (int i = 0; i < 32; i++)
+    {
+        if ((input >> i) & 1)
+        {
+            count++;
+        }
+    }
+    return count;
+}
+
+int binary_1_num_0(int n)
+{
+    int count = 0;
+    while (n)
+    {
+        n &= (n - 1); // 每次消掉右侧一个1;
+        count++;
+    }
+    return count;
+}
+
+int binary_difference_inside(int input[2])
+{
+    int num = 0;
+    num = input[0] ^ input[1];
+
+    return binary_1_num_0(num);
+}
+
+int binary_difference()
+{
+    int input_check = 1;
+    int input[2] = {0};
+
+    do
+    {
+        printf("Enter 2 numbers\n");
+        if (2 == scanf("%d %d", &input[0], &input[1]))
+        {
+            input_check = 0;
+        }
+    } while (input_check);
+
+    printf("%d\n", binary_difference_inside(input));
+}
+
+void binary_is2power()
+{
+    int input = 0;
+    int input_check = 0;
+    int input_check1 = 0;
+    int i = 0;
+    printf("Enter a positive number\n");
+    do
+    {
+        input_check = scanf("%d", &input);
+        if (input_check)
+        {
+            if (input > 0)
+            {
+                input_check1 = 1;
+            }
+        }
+    } while (!input_check1);
+
+    if (input - 1)
+    {
+        if (!(input & (input - 1)))
+        {
+            for (i = 1; i < 32; i++)
+            {
+                if ((input >> i) == 1)
+                    break;
+            }
+            printf("%d is the %d power of 2\n", input, i);
+        }
+        else
+        {
+            printf("%d is not power of 2\n", input);
+        }
+    }
+    else
+    {
+        printf("%d is not power of 2\n", input);
+    }
+}
+
+void binary_main_menu()
+{
+    printf("#####       1.Difference       #####\n");
+    printf("#####         2.'1' num        #####\n");
+    printf("#####       3.Power of 2       #####\n");
+    printf("#####          0.Exit          #####\n");
+}
+
+void binary_main()
+{
+    int input = 0;
+
+    do
+    {
+        clear();
+
+        binary_main_menu();
+
+        scanf("%d", &input);
+        clear();
+
+        switch (input)
+        {
+        case 1:
+            binary_difference();
+            binary_return_menu();
+            break;
+        case 2:
+            binary_1_num();
+            binary_return_menu();
+            break;
+        case 3:
+            binary_is2power();
+            binary_return_menu();
+            break;
+        default:
+            break;
+        }
+
+    } while (input);
+}
+
 void game_main()
 {
     int game_main_input = 0;
@@ -1711,7 +1946,8 @@ void main_menu()
 {
     printf("#####       Welcome!       #####\n");
     printf("#####        1.Myth        #####\n");
-    printf("#####        2.Games       #####\n");
+    printf("#####       2.Binary       #####\n");
+    printf("#####        3.Game        #####\n");
     printf("#####        0.Exit        #####\n");
     printf("\nMain menu load successfully!\n");
 }
@@ -1792,6 +2028,9 @@ int main()
             myth_main();
             break;
         case 2:
+            binary_main();
+            break;
+        case 3:
             game_main();
             break;
         default:
