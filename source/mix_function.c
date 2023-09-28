@@ -103,6 +103,7 @@ void normal_return_menu()
     printf("\n#####  1.Main menu  #####\n");
     scanf("%d", &over);
 }
+
 void game_return_menu()
 {
     int over = 0;
@@ -681,6 +682,23 @@ void size_of_types()
 
     normal_return_menu();
     clear();
+}
+
+void daffodil_main_menu()
+{
+    printf("#####        1.Single         #####\n");
+    printf("#####        2.Range          #####\n");
+}
+
+void daffodil_main()
+{
+    int input = 0;
+    clear();
+    daffodil_main_menu();
+    scanf("%d", &input);
+    clear();
+
+    ;
 }
 
 void trimoku_main_menu()
@@ -1690,52 +1708,14 @@ void game_main_menu()
 
 void myth_main_menu()
 {
-    printf("#####    1.Prime number    #####\n");
-    printf("#####   2.Tower of Hanoi   #####\n");
-    printf("##### 3.Fibonacci sequence #####\n");
-    printf("#####   4.Number counter   #####\n");
-    printf("#####   5.Size of types    #####\n");
-    printf("#####   6.Sort an arroy    #####\n");
-    printf("#####        0.Exit        #####\n");
-}
-
-void myth_main()
-{
-    int myth_main_input = 0;
-    do
-    {
-        clear();
-
-        myth_main_input = 0;
-        myth_main_menu();
-        scanf("%d", &myth_main_input);
-        clear();
-
-        switch (myth_main_input)
-        {
-        case 1:
-            prime_main();
-            break;
-        case 2:
-            hanoi_main();
-            break;
-        case 3:
-            fibonacci_sequence_main();
-            break;
-        case 4:
-            number_counter_main();
-            break;
-        case 5:
-            size_of_types();
-            break;
-        case 6:
-            sort_arroy_main();
-            break;
-        default:
-            break;
-        }
-
-    } while (myth_main_input);
+    printf("#####      1.Prime number      #####\n");
+    printf("#####     2.Tower of Hanoi     #####\n");
+    printf("#####   3.Fibonacci sequence   #####\n");
+    printf("#####     4.Number counter     #####\n");
+    printf("#####     5.Size of types      #####\n");
+    printf("#####     6.Sort an arroy      #####\n");
+    printf("#####   7.Slef expontiation    #####\n");
+    printf("#####          0.Exit          #####\n");
 }
 
 void binary_return_menu()
@@ -1880,6 +1860,47 @@ void binary_main_menu()
     printf("#####         2.'1' num        #####\n");
     printf("#####       3.Power of 2       #####\n");
     printf("#####          0.Exit          #####\n");
+}
+
+void myth_main()
+{
+    int myth_main_input = 0;
+    do
+    {
+        clear();
+
+        myth_main_input = 0;
+        myth_main_menu();
+        scanf("%d", &myth_main_input);
+        clear();
+
+        switch (myth_main_input)
+        {
+        case 1:
+            prime_main();
+            break;
+        case 2:
+            hanoi_main();
+            break;
+        case 3:
+            fibonacci_sequence_main();
+            break;
+        case 4:
+            number_counter_main();
+            break;
+        case 5:
+            size_of_types();
+            break;
+        case 6:
+            sort_arroy_main();
+            break;
+        case 7:
+            break;
+        default:
+            break;
+        }
+
+    } while (myth_main_input);
 }
 
 void binary_main()
