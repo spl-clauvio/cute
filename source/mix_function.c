@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <my_math.h>
 #include <Windows.h>
 #include <string.h>
 #include <my_sort.h>
@@ -87,6 +88,13 @@ void Fibonacci_sequence_return_menu()
 {
     int over = 0;
     printf("\n#####  1.Fibonacci main menu  #####\n");
+    scanf("%d", &over);
+}
+
+void self_exponentiation_return_menu()
+{
+    int over = 0;
+    printf("\n#####  1.Self exponentiation main menu  #####\n");
     scanf("%d", &over);
 }
 
@@ -687,18 +695,74 @@ void size_of_types()
 void daffodil_main_menu()
 {
     printf("#####        1.Single         #####\n");
-    printf("#####        2.Range          #####\n");
+    printf("#####         2.Range          #####\n");
+    printf("#####         0.Exit          #####\n");
+}
+
+void daffodil_single()
+{
+    printf("Enter a num.\n");
+    int input = 0;
+    scanf("%d", &input);
+
+    if (self_exponentiation(input, digits(input)))
+    {
+        printf("%d is a self exponentiation number.\n", input);
+    }
+    else
+    {
+        printf("%d is not a self exponentiation number.\n", input);
+    }
+}
+
+void daffodil_range()
+{
+    int left = 0, right = 0;
+    do
+    {
+
+        printf("Enter the min num.\n");
+        scanf("%d", &left);
+        printf("Enter the max num.\n");
+        scanf("%d", &right);
+
+    } while (left >= right);
+
+    printf("List:\n\n");
+
+    for (; left <= right; left++)
+    {
+        if (self_exponentiation(left, digits(left)))
+        {
+            printf("%d\n", left);
+        }
+    }
 }
 
 void daffodil_main()
 {
     int input = 0;
-    clear();
-    daffodil_main_menu();
-    scanf("%d", &input);
-    clear();
+    do
+    {
+        clear();
+        daffodil_main_menu();
+        scanf("%d", &input);
+        clear();
 
-    ;
+        switch (input)
+        {
+        case 1:
+            daffodil_single();
+            self_exponentiation_return_menu();
+            break;
+        case 2:
+            daffodil_range();
+            self_exponentiation_return_menu();
+            break;
+        default:
+            break;
+        }
+    } while (input);
 }
 
 void trimoku_main_menu()
@@ -1895,6 +1959,7 @@ void myth_main()
             sort_arroy_main();
             break;
         case 7:
+            daffodil_main();
             break;
         default:
             break;
