@@ -17,7 +17,10 @@
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "-o",
                 "D:\\C\\code_exe\\${fileBasenameNoExtension}.exe",
-                "-fexec-charset=GBK"
+                "-fexec-charset=GBK",
+                "-lmingw32",
+                "-lSDL2main",
+                "-lSDL2"
             ],
             "options": {
                 "cwd": "${fileDirname}"

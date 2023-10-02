@@ -6,6 +6,7 @@
 #include <string.h>
 #include <my_sort.h>
 #include <time.h>
+// #include <SDL2/SDL.h>
 
 static int hang_set = 5;
 static int line_spacing = 0;
@@ -1643,6 +1644,11 @@ void minesweeper_play(int line, int column, int mine)
         }
 
     } while (victory_flag);
+    char ch_clear = 0;
+    while (ch_clear = getchar() != '\n')
+    {
+        ;
+    }
 }
 
 void minesweeper_setting_menu()

@@ -30,6 +30,7 @@
                 }
             ],
             "preLaunchTask": "C/C++: gcc.exe 生成活动文件"
+           // "preLaunchTask": "build c"
         }
     ]
 }

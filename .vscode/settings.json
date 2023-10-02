@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "add.h": "c",
-        "windows.h": "c"
+        "windows.h": "c",
+        "sdl.h": "c"
     }
 }
