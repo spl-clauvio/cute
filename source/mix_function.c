@@ -7,6 +7,7 @@
 #include <my_sort.h>
 #include <time.h>
 // #include <SDL2/SDL.h>
+// #include <easyx>
 
 static int hang_set = 5;
 static int line_spacing = 0;
@@ -2042,6 +2043,7 @@ void main_menu()
     printf("#####        3.Game        #####\n");
     printf("#####        0.Exit        #####\n");
     printf("\nMain menu load successfully!\n");
+    printf("Enter a number.____");
 }
 
 int account()
