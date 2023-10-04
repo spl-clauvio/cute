@@ -7,7 +7,7 @@
 #include <my_sort.h>
 #include <time.h>
 // #include <SDL2/SDL.h>
-// #include <easyx>
+//  #include <easyx>
 
 static int hang_set = 5;
 static int line_spacing = 0;

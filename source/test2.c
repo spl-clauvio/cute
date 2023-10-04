@@ -9,18 +9,60 @@ void pause()
 int main()
 {
     int num = 0;
-    int i = 1;
-    int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    for (i = 0; i <= 12; i++)
+    int i = 0, j = 0, k = 0, sz3 = 0;
+    int ch = 0;
+    int sz1 = 0, sz2 = 0;
+
+    int arr1[100] = {0};
+    int arr2[100] = {0};
+    int arr3[100] = {0};
+
+    scanf("%d %d", &sz1, &sz2);
+    sz3 = sz1 + sz2;
+
+    for (i = 0; i < sz1; i++)
     {
-        arr[i] = 0;
-        printf("0\n");
+        scanf("%d", &arr1[i]);
     }
-    char ch = *((char *)(&i));
-    printf("%d\n", ch);
-    scanf("%d", &num);
+
+    for (i = 0; i < sz2; i++)
+    {
+        scanf("%d", &arr2[i]);
+    }
     i = 0;
-    printf("%d\n%d\n", num, self_exponentiation(num, digits(num)));
+    j = 0;
+
+    while ((k < sz3) && (i < sz1) && (j < sz2))
+    {
+        if (arr1[i] <= arr2[j])
+        {
+            arr3[k] = arr1[i];
+            i++;
+        }
+        else
+        {
+            arr3[k] = arr2[j];
+            j++;
+        }
+        k++;
+    }
+    while (i < sz1)
+    {
+        arr3[k] = arr1[i];
+        i++;
+        k++;
+    }
+    while (j < sz2)
+    {
+        arr3[k] = arr2[j];
+        j++;
+        k++;
+    }
+
+    for (i = 0; i < sz3; i++)
+    {
+        printf("%3d", arr3[i]);
+    }
 
     pause();
     return 0;
